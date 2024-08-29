@@ -2,11 +2,11 @@ import { Disquregna } from "../../Disquregna/Domain/Disquregna";
 import { Post } from "../../Post/Domain/Post";
 
 export interface Topic{
-   topicId: string;
+   topicId: string | undefined;
     
-    topicTitle: string;
-   posts: Post[];
-createdByDisquregna: Disquregna;
+    topicTitle: string | undefined;
+   posts: Post[] | undefined;
+createdByDisquregna: Disquregna | undefined;
     
-    createdDateTime: Date;
+    createdDateTime: Date | undefined;
 }

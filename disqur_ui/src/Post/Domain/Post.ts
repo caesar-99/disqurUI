@@ -3,13 +3,13 @@ import { Disquregna } from "../../Disquregna/Domain/Disquregna";
 import { Topic } from "../../Topic/Domain/Topics";
 
 export interface Post{
-    postId: string;
-    comments: Komment[];
-    topic: Topic[];
+    postId: string | undefined;
+    comments: Komment[] | undefined;
+    topic: Topic[] | undefined;
   
-    postDetail: string;
-    upVote: number;
-    downVote: number;
+    postDetail: string | undefined;
+    upVote: number | undefined;
+    downVote: number | undefined;
    createdByDisquregna: Disquregna;
-    createdDateTime: Date;
+    createdDateTime: Date | undefined;
 }

@@ -7,6 +7,7 @@ import { Grid, Input } from "@mui/material";
 import Divider from '@mui/material/Divider';
 import { PostCard } from "./Post/PostCard";
 import { TopicCard } from "./Topic/TopicCard";
+import { ViewPostAndCommentsCard } from "./ViewComponents/ViewPostAndCommentsCard";
 
 export const Main = () => {
   {
@@ -24,7 +25,7 @@ export const Main = () => {
             </Grid>
             <Grid container xs={12} direction={"row"}>
               <Grid item xs={2}><h1>List of topics</h1></Grid>
-              <Grid item xs={8}><PostCard/></Grid>
+              <Grid item xs={8}><ViewPostAndCommentsCard/></Grid>
               <Grid item xs={2}><TopicCard/></Grid>        
             </Grid>
 

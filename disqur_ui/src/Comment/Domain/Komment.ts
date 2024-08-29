@@ -2,12 +2,12 @@ import { Disquregna } from "../../Disquregna/Domain/Disquregna";
 import { Post } from "../../Post/Domain/Post";
 
 export interface Komment{
-    commentId: string;
-    post: Post;
-    commentDetail: string;
-    replyToCommentUUID: string;
-    upVote: number;
-    downVote: number;
+    commentId: string | undefined;
+    post: Post | undefined;
+    commentDetail: string | undefined;
+    replyToCommentUUID: string | undefined;
+    upVote: number | undefined;
+    downVote: number | undefined;
     createdByDisquregna: Disquregna;
-    createdDateTime: Date;
+    createdDateTime: Date | undefined;
 }
