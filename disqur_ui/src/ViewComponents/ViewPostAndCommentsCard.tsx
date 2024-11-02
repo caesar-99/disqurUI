@@ -5,7 +5,7 @@ import { Komment } from "../Comment/Domain/Komment"
 import { Post } from "../Post/Domain/Post"
 
 export const ViewPostAndCommentsCard = () => {
-    const [comment, setComment] = React.useState<Komment>();
+    const [comment, setComment] = React.useState<Komment[]>();
     const [post, setPost] = React.useState<Post>();
 
     React.useEffect(() => {
@@ -28,7 +28,7 @@ export const ViewPostAndCommentsCard = () => {
         }).then((response: Komment[]) => {
             console.log('setting komments' + response[0].commentDetail)
 
-            setComment(response[0]);
+            setComment(response);
         });
     }
 
@@ -45,14 +45,14 @@ export const ViewPostAndCommentsCard = () => {
         }).then((response: Post[]) => {
             console.log('setting komments' + response[0].postDetail)
 
-            setPost(response[0]);
+            setPost(response[2]);
         });
     }
 
     return (
         <React.Fragment>
-            {post !=null ? <PostCard post={post}/> : "POST loading"}
-            {comment != null ? <CommentCard comment={comment} /> : "KOMMENT loading"}
+            {post !== null && post !== undefined ? <PostCard post={post}/> : "POST loading"}
+            {comment !== null && comment !== undefined ? comment.map(c => <CommentCard comment={c} />) : "KOMMENT loading"}
         </React.Fragment>
     )
 }
