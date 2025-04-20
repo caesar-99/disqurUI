@@ -3,14 +3,14 @@ import { Post } from "../../Post/Domain/Post";
 import { Topic } from "../../Topic/Domain/Topics";
 
 export interface Disquregna{
-    disquregnaId: string;
-    firstName: string;
-    lastName: string;
-    emailAddress: string;
-    userName: string;
-    password: string;
-joinedDate: Date;
-    topics: Topic[];
-   posts: Post[];
-    comments: Komment[];
+    id: string | undefined;
+    firstName: string | undefined;
+    lastName: string | undefined;
+    emailAddress: string | undefined;
+    userName: string | undefined;
+    password: string | undefined;
+joinedDate: Date | undefined;
+    topics: Topic[] | undefined;
+   posts: Post[] | undefined;
+    comments: Komment[] | undefined;
 }
