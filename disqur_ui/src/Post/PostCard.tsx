@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Post } from "./Domain/Post";
 import { ArrowDownward } from "@mui/icons-material";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -19,6 +19,7 @@ interface PostProps {
 
 export const PostCard = ({ post, topic }: PostProps) => {    
     const { globalPost, globalMainPageContent, setGlobalPost, setGlobalMainPageContent, setGlobalLoggedInUser} = useGlobalContext()    
+    const[postInstance, setPostInstance] = useState(post);
 
     async function navigateToViewPostAndCommentsView(): Promise<void> {                
         setGlobalPost(post);
@@ -53,29 +54,44 @@ export const PostCard = ({ post, topic }: PostProps) => {
         }
     }
 
+    async function upVote(): Promise<void> {                
+        const response = await FetchWithBasicAuth("/v1/post/upvote", "PUT", "", [["postId", postInstance.id?? ""]])    
+            .then((response: Post) => {
+                setPostInstance(response);
+            });            
+        }
+
+
+async function downVote(): Promise<void> {  
+const response = await FetchWithBasicAuth("/v1/post/downvote", "PUT", "", [["postId", postInstance.id?? ""]])    
+            .then((response: Post) => {
+                setPostInstance(response);
+            });            
+        }
+
     return (
         <React.Fragment> 
             <Box sx={{background : "#FFDEAD", p: 2, border: '1px solid #dbaf6e', '&:hover': { background: "#dec196", cursor: "pointer" }}} onClick={navigateToViewPostAndCommentsView} marginBottom={2} marginTop={2}>                
-                {( post != null && post != undefined && post.createdByDisquregna != undefined && post.createdByDisquregna != null) && 
+                {( postInstance != null && postInstance != undefined && postInstance.createdByDisquregna != undefined && postInstance.createdByDisquregna != null) && 
             post ? 
             globalMainPageContent == MainPageContent.ViewTopicAndPosts ? <TopicTitleCard topic={topic} slashDMode={true} addGoBackButton={false} />  :
-            <div><h4>{post.createdByDisquregna!.userName != undefined ? "u/"   +  post.createdByDisquregna!.userName : "anon" }</h4></div> : <div>post not loaded yet</div>}            
+            <div><h4>{postInstance.createdByDisquregna!.userName != undefined ? "u/"   +  postInstance.createdByDisquregna!.userName : "anon" }</h4></div> : <div>post not loaded yet</div>}            
             <div>
                 <p className="postHeader">
-                    {post.postTitle}
+                    {postInstance.postTitle}
                 </p>
                 <p className="postContent">
                     
-                    {post.postDetail?.toUpperCase().includes("YOUTUBE") && getVideoUrl() ? 
+                    {postInstance.postDetail?.toUpperCase().includes("YOUTUBE") && getVideoUrl() ? 
                     
-                    <YouTubePlayer videoId={getVideoUrl()} />  : parse(post.postDetail!)
+                    <YouTubePlayer videoId={getVideoUrl()} />  : parse(postInstance.postDetail!)
                     }
                         
                     
                 </p>
                 <p>
-                <Stack direction={"row"} alignItems={"center"} spacing={2}>
-                <ArrowUpwardIcon/> { "  "} {post.upVote} {"  "} <ArrowDownward/> { "  "} {post.downVote} {<Button onClick={navigateToViewPostAndCommentsView}> {"Comments "} {post.comments?.length}</Button>}
+                <Stack direction={"row"} alignItems={"center"} spacing={2}><Button onClick={upVote}>
+                <ArrowUpwardIcon/></Button> { "  "} {postInstance.upVote} {"  "} <Button onClick={downVote}><ArrowDownward/></Button> { "  "} {postInstance.downVote} {<Button onClick={navigateToViewPostAndCommentsView}> {"Comments "} {postInstance.comments?.length}</Button>}
                 </Stack>
                     
                     
